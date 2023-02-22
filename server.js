@@ -1,13 +1,10 @@
-const mongoose = require("mongoose");
+const jsonServer = require("json-server");
+const server = jsonServer.create()
+const router = jsonServer.router('db.json')
+const middewares = jsonServer.defaults()
+const port = process.env.PORT || 4000
 
-const app = require("./app");
+server.use(middewares)
+server.use(router)
 
-const { DB_HOST, PORT = 3000 } = process.env;
-
-mongoose
-  .connect(DB_HOST)
-  .then(() => app.listen(PORT))
-  .catch((err) => {
-    console.log(err.message);
-    process.exit(1);
-  });
+server.listen(port)
